@@ -3,95 +3,95 @@ package com.company.view;
 
 
 import com.company.handler.Handler;
-import com.company.view.draw.DrawComp;
-import com.company.view.draw.DrawCompCloud;
-import com.company.view.draw.DrawCompWhale;
-import com.company.view.draw.DrawFactory;
+import com.company.view.draw.ViewCharacter;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
+import javax.swing.*;
 
 
 public class WhaleFrame extends JFrame implements KeyListener {
-
-    private JPanel panelWhale;
-    private JPanel panelCloud;
+    // panels
     private RootPanel panelRoot;
+    private JPanel panelInfo;
 
-    private FlowLayout flowWhale;
-    private FlowLayout flowCloud;
+    // layouts
+    private FlowLayout layoutInfo;
 
+    // controls
+    private JButton buttonStartGame;
+    private JLabel labelScore;
+    private JLabel labelHealth;
 
-    private int width = 1100;
-    private int height = 800;
+    /**
+     * WhaleFrame is the main window to the game.
+     * @param width Width of window in pixels.
+     * @param height Height of window in pixels.
+     */
+    public WhaleFrame(int width, int height) {
 
-
-
-    public WhaleFrame(){
-       /// this.drawWhale = DrawFactory.createDrawWhale();
-      //  this.drawWhale.invalidate();
-        //this.drawCloud = DrawFactory.createDrawCloud();
-
-
-       // this.panelWhale = new JPanel();
-       // this.panelCloud = new JPanel();
+        // create panels
         this.panelRoot = new RootPanel();
+        this.panelInfo = new JPanel();
 
+        // create layouts
+        this.layoutInfo = new FlowLayout();
 
+        // create controls
+        this.buttonStartGame = new JButton("Start Game");
+        this.labelScore = new JLabel("-----");
+        this.labelHealth = new JLabel("* * *");
 
-        this.addKeyListener(this);
+        // focus to frame
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
 
-        this.setTitle("Its a whale");
+        // frame attributes
+        this.setTitle("Nimbus");
         this.setResizable(false);
         this.setSize(width, height);
         this.setMinimumSize(new Dimension(width, height));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-       // this.panelWhale.add(this.drawWhale);
-       // this.panelCloud.add(this.drawCloud);
-    //   this.panelRoot.add(this.panelWhale);
-       // this.panelRoot.add(this.panelCloud);
+
+        // containers
+        // -- layouts
+        this.panelInfo.setLayout(this.layoutInfo);
+        this.panelInfo.add(this.labelScore);
+        this.panelInfo.add(this.labelHealth);
 
 
-     //   this.setContentPane(this.panelRoot);
-
-
-        //this.add(this.drawWhale);
+        // -- panels
         this.setContentPane(this.panelRoot);
-       // this.panelRoot.add(View.instance().getDrawWhale());
+        this.panelRoot.add(this.panelInfo);
         this.panelRoot.add(View.instance().getDrawCloud());
         this.panelRoot.add(View.instance().getDrawWhale());
-        System.out.println("WhaleFrame 8888 88 99 99 33    this.panelRoot  " + this.panelRoot.getComponentCount());
-        
-       // this.getContentPane().setBackground(Color.PINK);
-        //this.getContentPane().add(this.a);
-        //this.getContentPane().add(this.drawCloud);
+        this.panelRoot.add(View.instance().getDrawStar());
+        this.panelRoot.add(View.instance().getDrawGlitter());
 
-        //this.pack();
-        this.setVisible(true);
-        //this.drawWhale.moveLeft();
+        // frame color, has to be after containers
+        this.getContentPane().setBackground(Color.PINK);
 
-        //this.drawCloud.floatLeft();
-    }
-/*
-    public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                mainFrame frame = new mainFrame();
+        // action listeners
+        this.addKeyListener(this);
 
+        this.buttonStartGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Handler.instance().handleEvent(Handler.instance().START_GAME);
             }
         });
+
+
+        System.out.println("WhaleFrame 8888 88 99 99 33    this.panelRoot  " + this.panelRoot.getComponentCount());
+        this.setVisible(true);
+
     }
-    */
+
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -122,13 +122,10 @@ public class WhaleFrame extends JFrame implements KeyListener {
 
 
     }
-
-    public void addDrawComp(DrawComp drawComp) {
-        //this.panelRoot.add(drawComp);
-    }
     
-    public void updateCloudPanel() {
+    public void updateRootPanel() {
     	System.out.println("WhaleFrame   updateCloudPanel()  ______^^^^^^^^");
+    	new Exception().printStackTrace();
     	this.panelRoot.repaint();
     	
     }
@@ -137,6 +134,22 @@ public class WhaleFrame extends JFrame implements KeyListener {
     	System.out.println("WhaleFrame   updateStarPanel()   ############******** ");
     	this.panelRoot.repaint();
     	
+    }
+
+    public RootPanel getPanelRoot() {
+        return panelRoot;
+    }
+
+    public JButton getButtonStartGame() {
+        return buttonStartGame;
+    }
+
+    public JLabel getLabelScore() {
+        return labelScore;
+    }
+
+    public JLabel getLabelHealth() {
+        return labelHealth;
     }
 }
 

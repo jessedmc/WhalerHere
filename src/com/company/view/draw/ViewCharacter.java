@@ -2,6 +2,8 @@ package com.company.view.draw;
 
 
 
+import com.company.extra.Layout;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -9,29 +11,24 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-public class DrawComp extends JPanel {
-    public int startX = 50;
-    public int startY = 50;
-
-    public int currentX = startX;
-    public int currentY = startY;
-
+/**
+ * Parent class for the characters of the game. Used to store image info, positions, and
+ * dimensions of the characters on the screen.
+ */
+public class ViewCharacter extends JPanel {
+    public int currentX = 1;
+    public int currentY = 1;
     public int currentWidth = 100;
     public int currentHeight = 70;
-
     public int incX = 20;
     public int incY = 20;
-
     protected BufferedImage image = null;
-
     public String descriptor = "a component";
 
 
-
-    // initial attributes
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("DrawComp   paintComponent(Graphics g)   ");  
+        System.out.println("ViewCharacter   paintComponent(Graphics g)   ");
         //g.setColor(Color.PINK);
         // g.drawRect(currentX, currentY, currentWidth, currentHeight);
         // g.fillRect(currentX, currentY, currentWidth, currentHeight);
@@ -40,12 +37,12 @@ public class DrawComp extends JPanel {
 
     public void moveRight() {
         this.currentX = this.currentX + this.incX;
-        repaint(); // calls update()
+        repaint(); // calls update() to paintComponent() in super subclasses
     }
 
     public void moveLeft() {
         this.currentX = this.currentX - this.incX;
-        System.out.println("DrawComp  moveLeft() this.currentX  " + this.currentX);
+        System.out.println("ViewCharacter  moveLeft() this.currentX  " + this.currentX);
         repaint();
     }
 
@@ -64,21 +61,7 @@ public class DrawComp extends JPanel {
 
     }
 
-    public int getStartX() {
-        return startX;
-    }
 
-    public void setStartX(int startX) {
-        this.startX = startX;
-    }
-
-    public int getStartY() {
-        return startY;
-    }
-
-    public void setStartY(int startY) {
-        this.startY = startY;
-    }
 
     public int getCurrentX() {
         return currentX;

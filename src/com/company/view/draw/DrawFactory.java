@@ -1,22 +1,27 @@
 package com.company.view.draw;
 
+/**
+ * Factory class for creating drawing components in the View.
+ */
 public class DrawFactory {
-    public static DrawCompWhale createDrawWhale() {
-        DrawCompWhale drawWhale = new DrawCompWhale();
-
-
-
+    public static ViewWhale createDrawWhale() {
+        ViewWhale drawWhale = new ViewWhale();
         return drawWhale;
     }
 
-    public static DrawCompCloud createDrawCloud() {
-        DrawCompCloud drawCloud = new DrawCompCloud();
+    public static ViewCloud createDrawCloud() {
+        ViewCloud drawCloud = new ViewCloud();
         return drawCloud;
     }
     
-    public static DrawCompStar createDrawStar() {
-        DrawCompStar drawStar = new DrawCompStar();
+    public static ViewStar createDrawStar() {
+        ViewStar drawStar = new ViewStar();
         return drawStar;
+    }
+
+    public static ViewGlitter createDrawGlitter() {
+        ViewGlitter drawGlitter = new ViewGlitter();
+        return drawGlitter;
     }
     
     
