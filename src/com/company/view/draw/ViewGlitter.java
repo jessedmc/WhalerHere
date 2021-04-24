@@ -16,10 +16,18 @@ import java.io.IOException;
  * timing for animations.
  */
 public class ViewGlitter extends ViewCharacter implements ActionListener {
+    /**
+     * Counts the calls of the paintComponent(Graphics g) method.
+     */
     protected int count = 0;
-    private Thread thread;
+    /**
+     * Timer for animation.
+     */
     private Timer timer;
 
+    /**
+     * Constructor for glitter character
+     */
     public ViewGlitter() {
         this.currentX = Layout.instance().GLITTER_START_WINDOW_X_POS;
         this.currentY = Layout.instance().GLITTER_START_WINDOW_Y_POS;
@@ -29,23 +37,20 @@ public class ViewGlitter extends ViewCharacter implements ActionListener {
         this.incY = Layout.instance().glitterIncY;
     }
 
-    // initial attributes
+    /**
+     * Swing drawing method. Draws to screen.
+     * @param g The component controlling the drawing.
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("ViewGlitter  paintComponent(Graphics g)      this.count " + this.count);
         this.count++;
-        new Exception().printStackTrace();
         if (this.image == null) {
             try {
                 this.image = ImageIO.read(new File("glitter_trans.png"));
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-        System.out.println("ViewGlitter  paintComponent(Graphics g) 22222   this.currentX  " + this.currentX);
-        System.out.println("ViewGlitter  paintComponent(Graphics g) 22222   this.currentY  " + this.currentY);
-        System.out.println("ViewGlitter  paintComponent(Graphics g) 22222   this.image  " + this.image.toString());
 
         g.drawImage(this.image, this.currentX, this.currentY, null);
 
@@ -53,12 +58,12 @@ public class ViewGlitter extends ViewCharacter implements ActionListener {
         if (this.currentX < (-1 * this.currentWidth)) {
             this.currentX = Layout.instance().FRAME_WIDTH;
         }
-
     }
 
-
+    /**
+     * Animation for glitter floating left.
+     */
     public void floatLeft() {
-        System.out.println("DrawCompCloud floatLeftAux()");
         timer = new Timer(2000, this);
         Thread t = new Thread() {
             public void run() {
@@ -70,7 +75,10 @@ public class ViewGlitter extends ViewCharacter implements ActionListener {
         };
         t.start();
     }
-
+    /**
+     * A motion is performed on the glitter so this triggers a View update.
+     * @param e Swing ActionEvent object
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         moveLeft();

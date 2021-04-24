@@ -14,9 +14,14 @@ import javax.imageio.ImageIO;
  * timing for animations.
  */
 public class ViewWhale extends ViewCharacter {
+	/**
+	 * Counts the calls of the paintComponent(Graphics g) method.
+	 */
 	protected int count = 0;
-	private Thread thread;
 
+	/**
+	 * Constructor for cloud character
+	 */
 	public ViewWhale() {
 		this.currentX = Layout.instance().WHALE_START_WINDOW_X_POS;
 		this.currentY = Layout.instance().WHALE_START_WINDOW_Y_POS;
@@ -26,39 +31,45 @@ public class ViewWhale extends ViewCharacter {
 		this.incY = Layout.instance().whaleIncY;
 	}
 
-
+	/**
+	 * Swing drawing method. Draws to screen.
+	 * @param g The component controlling the drawing.
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("ViewWhale  paintComponent(Graphics g)      this.count " + this.count);
 		this.count++;
-		new Exception().printStackTrace();
 		if (this.image == null) {
 			try {
 				this.image = ImageIO.read(new File("whale3.png"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		System.out.println("ViewWhale  paintComponent(Graphics g) 22222   this.currentX  " + this.currentX);
-		System.out.println("ViewWhale  paintComponent(Graphics g) 22222   this.currentY  " + this.currentY);
-		System.out.println("ViewWhale  paintComponent(Graphics g) 22222   this.image  " + this.image.toString());
 
 		g.drawImage(this.image, this.currentX, this.currentY, null);
 	}
-	
+
+	/**
+	 * Whale moves right.
+	 */
 	public void stepRight() {
 		this.moveRight();
 	}
-
+	/**
+	 * Whale moves left.
+	 */
 	public void stepLeft() {
 		this.moveLeft();
 	}
-
+	/**
+	 * Whale moves up.
+	 */
 	public void stepUp() {
 		this.moveUp();
 	}
-
+	/**
+	 * Whale moves down.
+	 */
 	public void stepDown() {
 		this.moveDown();
 	}

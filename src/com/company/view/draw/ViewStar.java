@@ -21,11 +21,17 @@ import com.company.view.View;
  * timing for animations.
  */
 public class ViewStar extends ViewCharacter implements ActionListener {
+	/**
+	 * Counts the calls of the paintComponent(Graphics g) method.
+	 */
 	protected int count = 0;
-	private Thread thread;
+	/**
+	 * Timer for animation.
+	 */
 	private	Timer timer;
-
-
+	/**
+	 * Constructor for star character
+	 */
 	public ViewStar() {
 		this.currentX = Layout.instance().STAR_START_WINDOW_X_POS;
 		this.currentY = Layout.instance().STAR_START_WINDOW_Y_POS;
@@ -35,34 +41,29 @@ public class ViewStar extends ViewCharacter implements ActionListener {
 		this.incY = Layout.instance().starIncY;
 	}
 
-	// initial attributes
+	/**
+	 * Swing drawing method. Draws to screen.
+	 * @param g The component controlling the drawing.
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("ViewStar  paintComponent(Graphics g)      this.count " + this.count);
 		this.count++;
-
 		if (this.image == null) {
 			try {
 				this.image = ImageIO.read(new File("star_trans.png"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		System.out.println("ViewStar  paintComponent(Graphics g) @@@@@@@@   this.currentX  " + this.currentX);
-		System.out.println("ViewStar  paintComponent(Graphics g) @@@@@@@@   this.currentY  " + this.currentY);
-		System.out.println("ViewStar  paintComponent(Graphics g) @@@@@@@@   this.image  " + this.image.toString());
 
 		g.drawImage(this.image, this.currentX, this.currentY, null);
 
 		// check for collision (hit)
 		if (Controller.instance().getModelGameMode().equals("play") || Controller.instance().getModelGameMode().equals("continue")) {
 			boolean whaleStarHit = this.isWhaleStarHit();
-			System.out.println("ViewStar  paintComponent(Graphics g)    whaleStarHit  " + whaleStarHit);
 			if (!Controller.instance().isWhaleInvincible()) {
 				if (whaleStarHit) {
 					Handler.instance().handleEvent(Handler.instance().WHALE_HIT_STAR); // good
-
 				}
 			}
 		}
@@ -70,10 +71,12 @@ public class ViewStar extends ViewCharacter implements ActionListener {
 		// check for screen wrapping, reset whale's invincibility
 		if (this.currentX < (-1 * this.currentWidth)) {
 			this.currentX = Layout.instance().FRAME_WIDTH;
-
 		}
 	}
-
+	/**
+	 * Checks to see if the whale hit a star.
+	 * @return boolean, True is whale hit star, False is no hit.
+	 */
 	public boolean isWhaleStarHit() {
 		int whaleX = View.instance().getDrawWhale().getCurrentX();
 		int whaleY = View.instance().getDrawWhale().getCurrentY();
@@ -83,15 +86,6 @@ public class ViewStar extends ViewCharacter implements ActionListener {
 		int starY = this.currentY;
 		int starWidth = this.currentWidth;
 		int starHeight = this.currentHeight;
-		System.out.println("ViewStar isWhaleStarHit()      000 11 000      whaleX " + whaleX);
-		System.out.println("ViewStar isWhaleStarHit()      000 11 000      whaleY " + whaleY);
-		System.out.println("ViewStar isWhaleStarHit()      000 11 000      whaleWidth " + whaleWidth);
-		System.out.println("ViewStar isWhaleStarHit()      000 11 000      whaleHeight " + whaleHeight);
-		System.out.println("ViewStar isWhaleStarHit()      000 11 000      starX " + starX);
-		System.out.println("ViewStar isWhaleStarHit()      000 11 000      starY " + starY);
-		System.out.println("ViewStar isWhaleStarHit()      000 11 000      starWidth " + starWidth);
-		System.out.println("ViewStar isWhaleStarHit()      000 11 000      starHeight " + starHeight);
-
 
 		if ((whaleX + whaleWidth) > starX && whaleX < (starX + starWidth)) { // hit on x axis
 			if (whaleY < starY && (whaleY + whaleHeight) > starY) { // hit on y axis
@@ -102,9 +96,10 @@ public class ViewStar extends ViewCharacter implements ActionListener {
 		return false;
 	}
 
-
+	/**
+	 * Animation for star floating left.
+	 */
 	public void floatLeft() {
-		System.out.println("ViewStar floatLeft() _ --- _ --- _ -- _");
 		timer = new Timer(2000, this);
 		Thread t = new Thread() {
 			public void run() {
@@ -116,10 +111,12 @@ public class ViewStar extends ViewCharacter implements ActionListener {
 		};
 		t.start();
 	}
-
+	/**
+	 * A motion is performed on the star so this triggers a View update.
+	 * @param e Swing ActionEvent object
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("ViewStar actionPerformed(ActionEvent e)  -- _ ---- _ ---- _ ---- _ --");
 		moveLeft();
 		View.instance().updateStar();
 		timer.restart();

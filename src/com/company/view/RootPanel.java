@@ -8,10 +8,17 @@ import com.company.view.draw.ViewWhale;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Main panel for window of game.
+ */
 public class RootPanel extends JPanel {
+
+    /**
+     * Swing drawing method. Draws to screen.
+     * @param g The component controlling the drawing.
+     */
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        System.out.println("RootPanel paintComponent(Graphics g) " + g.toString());
         ViewWhale drawWhale = View.instance().getDrawWhale();
         ViewCloud drawCloud = View.instance().getDrawCloud();
         ViewStar drawStar = View.instance().getDrawStar();
@@ -20,9 +27,5 @@ public class RootPanel extends JPanel {
         g.drawImage(drawCloud.getImage(), drawCloud.currentX, drawCloud.currentY, this);
         g.drawImage(drawStar.getImage(), drawStar.currentX, drawStar.currentY, this);
         g.drawImage(drawGlitter.getImage(), drawGlitter.currentX, drawGlitter.currentY, this);
-        System.out.println("RootPanel paintComponent(Graphics g) " + g.getColor());
-
-
-
     }
 }

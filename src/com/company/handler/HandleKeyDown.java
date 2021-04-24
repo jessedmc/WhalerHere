@@ -7,41 +7,45 @@ import com.company.view.View;
  */
 public class HandleKeyDown {
 
-
+    /**
+     * Singleton instance
+     */
     private static HandleKeyDown instance = null;
 
-
+    /**
+     * Singleton constructor
+     */
     private HandleKeyDown() {
 
     }
 
-
+    /**
+     * Singleton instance call.
+     * @return singleton instance.
+     */
     public static HandleKeyDown instance() {
         if (instance == null)
             instance = new HandleKeyDown();
         return instance;
     }
-    public void handle (int direction){
+
+    /**
+     * Handles a key down event for the directional arrows.
+     * @param direction Which directional arrow was pressed.
+     */
+    public void handle(int direction){
         System.out.println("HandleKeyDown handle() direction " + direction);
         if (direction == Handler.instance().KEY_DOWN_DOWN){
-            System.out.println("HandleKeyDown handle() KEY_DOWN_DOWN " );
             View.instance().whaleStepDown();
         }
         else if (direction == Handler.instance().KEY_DOWN_LEFT){
-            System.out.println("HandleKeyDown handle() KEY_DOWN_LEFT " );
             View.instance().whaleStepLeft();
-            //View.instance().cloudFloatLeft();
-            //View.instance().update();
         }
         else if (direction == Handler.instance().KEY_DOWN_RIGHT){
-            System.out.println("HandleKeyDown handle() KEY_DOWN_RIGHT " );
             View.instance().whaleStepRight();
-            //View.instance().update();
         }
         else if (direction == Handler.instance().KEY_DOWN_UP){
-            System.out.println("HandleKeyDown handle() KEY_DOWN_UP " );
             View.instance().whaleStepUp();
-            //View.instance().update();
         }
         
     }

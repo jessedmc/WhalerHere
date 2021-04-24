@@ -9,12 +9,20 @@ import com.company.view.View;
  * Handles the event of the whale colliding with the cloud on screen.
  */
 public class HandleWhaleHitsCloud {
+    /**
+     * Singleton instance
+     */
     private static HandleWhaleHitsCloud instance = null;
-
+    /**
+     * Singleton constructor
+     */
     private HandleWhaleHitsCloud() {
 
     }
-
+    /**
+     * Singleton instance call.
+     * @return singleton instance.
+     */
     public static HandleWhaleHitsCloud instance() {
         if (instance == null)
             instance = new HandleWhaleHitsCloud();
@@ -22,8 +30,10 @@ public class HandleWhaleHitsCloud {
     }
 
     // bad hit
+    /**
+     * Handler for a whale hitting a cloud event.
+     */
     public void handle() {
-        System.out.println("HandleWhaleHitsCloud handle()  ");
         SoundPlay.instance().playBadSound();
         Controller.instance().setWhaleInvincible(true);
         Controller.instance().decModelHealthByOne();

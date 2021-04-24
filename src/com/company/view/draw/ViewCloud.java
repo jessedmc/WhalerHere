@@ -20,11 +20,18 @@ import com.company.view.View;
  * timing for animations.
  */
 public class ViewCloud extends ViewCharacter implements ActionListener {
+	/**
+	 * Counts the calls of the paintComponent(Graphics g) method.
+	 */
 	protected int count = 0;
-	private Thread thread;
+	/**
+	 * Timer for timing animations.
+	 */
 	private Timer timer;
 
-	// initial attributes
+	/**
+	 * Constructor for cloud character
+	 */
 	public ViewCloud() {
 		this.currentX = Layout.instance().CLOUD_START_WINDOW_X_POS;
 		this.currentY = Layout.instance().CLOUD_START_WINDOW_Y_POS;
@@ -33,12 +40,13 @@ public class ViewCloud extends ViewCharacter implements ActionListener {
 		this.incX = Layout.instance().cloudIncX;
 		this.incY = Layout.instance().cloudIncY;
 	}
-
+	/**
+	 * Swing drawing method. Draws to screen.
+	 * @param g The component controlling the drawing.
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("ViewCloud  paintComponent(Graphics g)      this.count " + this.count);
 		this.count++;
-		new Exception().printStackTrace();
 		if (this.image == null) {
 			try {
 				this.image = ImageIO.read(new File("cloud.png"));
@@ -47,20 +55,15 @@ public class ViewCloud extends ViewCharacter implements ActionListener {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("ViewCloud  paintComponent(Graphics g) 22222   this.currentX  " + this.currentX);
-		System.out.println("ViewCloud  paintComponent(Graphics g) 22222   this.currentY  " + this.currentY);
-		System.out.println("ViewCloud  paintComponent(Graphics g) 22222   this.image  " + this.image.toString());
 
 		g.drawImage(this.image, this.currentX, this.currentY, null);
 
 		// check for collision (hit)
 		if (Controller.instance().getModelGameMode().equals("play") || Controller.instance().getModelGameMode().equals("continue")) {
 			boolean whaleCloudHit = this.isWhaleCloudHit();
-			System.out.println("ViewCloud  paintComponent(Graphics g)    whaleCloudHit  " + whaleCloudHit);
 			if (!Controller.instance().isWhaleInvincible()) {
 				if (whaleCloudHit) {
 					Handler.instance().handleEvent(Handler.instance().WHALE_HIT_CLOUD); // good
-
 				}
 			}
 		}
@@ -70,10 +73,13 @@ public class ViewCloud extends ViewCharacter implements ActionListener {
 			this.currentX = Layout.instance().FRAME_WIDTH;
 			Controller.instance().setWhaleInvincible(false);
 			SoundPlay.instance().playWhaleSoundOne();
-
 		}
 	}
 
+	/**
+	 * Checks to see if the whale hit a cloud.
+	 * @return boolean, True is whale hit cloud, False is no hit.
+	 */
 	public boolean isWhaleCloudHit() {
 		int whaleX = View.instance().getDrawWhale().getCurrentX();
 		int whaleY = View.instance().getDrawWhale().getCurrentY();
@@ -83,15 +89,6 @@ public class ViewCloud extends ViewCharacter implements ActionListener {
 		int cloudY = this.currentY;
 		int cloudWidth = this.currentWidth;
 		int cloudHeight = this.currentHeight;
-		System.out.println("ViewCloud isWhaleCloudHit()      000 11 000      whaleX " + whaleX);
-		System.out.println("ViewCloud isWhaleCloudHit()      000 11 000      whaleY " + whaleY);
-		System.out.println("ViewCloud isWhaleCloudHit()      000 11 000      whaleWidth " + whaleWidth);
-		System.out.println("ViewCloud isWhaleCloudHit()      000 11 000      whaleHeight " + whaleHeight);
-		System.out.println("ViewCloud isWhaleCloudHit()      000 11 000      cloudX " + cloudX);
-		System.out.println("ViewCloud isWhaleCloudHit()      000 11 000      cloudY " + cloudY);
-		System.out.println("ViewCloud isWhaleCloudHit()      000 11 000      cloudWidth " + cloudWidth);
-		System.out.println("ViewCloud isWhaleCloudHit()      000 11 000      cloudHeight " + cloudHeight);
-
 
 		if ((whaleX + whaleWidth) > cloudX && whaleX < (cloudX + cloudWidth)) { // hit on x axis
 			if (whaleY < cloudY && (whaleY + whaleHeight) > cloudY) { // hit on y axis
@@ -102,8 +99,10 @@ public class ViewCloud extends ViewCharacter implements ActionListener {
 		return false;
 	}
 
+	/**
+	 * Animation for cloud floating left.
+	 */
 	public void floatLeft() {
-		System.out.println("ViewCloud floatLeft()");
 		timer = new Timer(2000, this);
 		Thread t = new Thread() {
 			public void run() {
@@ -116,9 +115,12 @@ public class ViewCloud extends ViewCharacter implements ActionListener {
 		t.start();
 	}
 
+	/**
+	 * A motion is performed on the cloud so this triggers a View update.
+	 * @param e Swing ActionEvent object
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("ViewCloud actionPerformed(ActionEvent e)");
 		moveLeft();
 		View.instance().updateRootPanel();
 		timer.restart();

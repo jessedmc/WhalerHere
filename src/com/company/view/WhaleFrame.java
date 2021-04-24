@@ -13,18 +13,38 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-
+/**
+ * This class is the main window for the game.
+ */
 public class WhaleFrame extends JFrame implements KeyListener {
     // panels
+    /**
+     * The main panel for the window.
+     */
     private RootPanel panelRoot;
+    /**
+     * This panel contains all the info displayed during the game.
+     */
     private JPanel panelInfo;
 
+    /**
+     * Subcontainer of panelInfo
+     */
     // layouts
     private FlowLayout layoutInfo;
 
     // controls
+    /**
+     * Start game button.
+     */
     private JButton buttonStartGame;
+    /**
+     * Displays the score.
+     */
     private JLabel labelScore;
+    /**
+     * Displays the health.
+     */
     private JLabel labelHealth;
 
     /**
@@ -86,21 +106,21 @@ public class WhaleFrame extends JFrame implements KeyListener {
             }
         });
 
-
-        System.out.println("WhaleFrame 8888 88 99 99 33    this.panelRoot  " + this.panelRoot.getComponentCount());
         this.setVisible(true);
 
     }
 
-
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("WhaleFrame keyTyped(KeyEvent e)      nnnnnnnnn ");
+
     }
 
+    /**
+     * Standard Swing keypress listener. Listens for directional arrow presses for motion of whale.
+     * @param e KeyEvent of KeyPress.
+     */
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("WhaleFrame keyPressed(KeyEvent e)     oooooooo ");
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             Handler.instance().handleEvent(Handler.instance().KEY_DOWN, Handler.instance().KEY_DOWN_RIGHT);
         }
@@ -120,34 +140,40 @@ public class WhaleFrame extends JFrame implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
-
     }
-    
+
+    /**
+     * Main panel updating for window.
+     */
     public void updateRootPanel() {
-    	System.out.println("WhaleFrame   updateCloudPanel()  ______^^^^^^^^");
-    	new Exception().printStackTrace();
     	this.panelRoot.repaint();
-    	
-    }
-    
-    public void updateStarPanel() {
-    	System.out.println("WhaleFrame   updateStarPanel()   ############******** ");
-    	this.panelRoot.repaint();
-    	
     }
 
+    /**
+     * Retrieve the root panel of window.
+     * @return The root panel of window.
+     */
     public RootPanel getPanelRoot() {
         return panelRoot;
     }
-
+    /**
+     * Retrieve the button for starting the game in window.
+     * @return The button for starting the game in window.
+     */
     public JButton getButtonStartGame() {
         return buttonStartGame;
     }
-
+    /**
+     * Retrieve the label for displaying the score.
+     * @return The label for displaying the score.
+     */
     public JLabel getLabelScore() {
         return labelScore;
     }
-
+    /**
+     * Retrieve the label for displaying the health.
+     * @return The label for displaying the health.
+     */
     public JLabel getLabelHealth() {
         return labelHealth;
     }

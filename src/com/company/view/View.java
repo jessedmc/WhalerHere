@@ -6,8 +6,13 @@ import com.company.controller.Controller;
 import com.company.extra.Layout;
 import com.company.view.draw.*;
 
+/**
+ * The main View of the MVC. This class contains all the elements that are displayed on the screen.
+ */
 public class View {
-
+    /**
+     * Singleton instance
+     */
     private static View instance = null;
     private WhaleFrame frameWhale;
     private ViewWhale drawWhale;
@@ -15,51 +20,53 @@ public class View {
     private ViewStar drawStar;
     private ViewGlitter drawGlitter;
 
-
+    /**
+     * Singleton constructor
+     */
     private View() {
 
     }
 
-
+    /**
+     * Singleton instance call.
+     * @return singleton instance.
+     */
     public static View instance() {
         if (instance == null)
             instance = new View();
         return instance;
     }
 
+    /**
+     * Intialize the View.
+     */
     public void init() {
-        System.out.println("View init()      ");
-
         this.drawWhale = DrawFactory.createDrawWhale();
         this.drawCloud = DrawFactory.createDrawCloud();
         this.drawStar = DrawFactory.createDrawStar();
         this.drawGlitter = DrawFactory.createDrawGlitter();
-
         this.frameWhale = new WhaleFrame(Layout.instance().FRAME_WIDTH, Layout.instance().FRAME_HEIGHT);
-        new Exception().printStackTrace();
 
 
 
         this.update();
     }
-    
+
+    /**
+     * The main updating method during the game. Updates all elements on the screen.
+     */
     public void updateRootPanel() {
-    	System.out.println("View updateRootPanel()    ^^^^^^^^^^^^^^^^^^^^^(((*(8(*(*       ");
-        new Exception().printStackTrace();
-    	//this.drawCloud.repaint();
     	this.frameWhale.updateRootPanel();
     }
     
     public void updateStar() {
-    	System.out.println("View updateStar()     ((((((()))))))        ");
-        new Exception().printStackTrace();
     	this.frameWhale.updateRootPanel();
-    	//this.drawStar.repaint();
     }
 
+    /**
+     * Update method during the start of the game.
+     */
     public void updateStartGame() {
-        System.out.println("View updateStartGame() ");
-        new Exception().printStackTrace();
         // set positions of characters according to model
         this.drawWhale.setCurrentX(Controller.instance().getModelWhaleCurrentXPos());
         this.drawWhale.setCurrentY(Controller.instance().getModelWhaleCurrentYPos());
@@ -70,40 +77,18 @@ public class View {
         this.drawGlitter.setCurrentX(Controller.instance().getModelGlitterCurrentXPos());
         this.drawGlitter.setCurrentY(Controller.instance().getModelGlitterCurrentYPos());
 
-        System.out.println("View updateStartGame()  this.drawWhale.getWidth() " + this.drawWhale.getWidth());
-        System.out.println("View updateStartGame()  this.drawWhale.getHeight() " + this.drawWhale.getHeight());
-        System.out.println("View updateStartGame()  this.drawWhale.getCurrentX() " + this.drawWhale.getCurrentX());
-        System.out.println("View updateStartGame()  this.drawWhale.getCurrentY() " + this.drawWhale.getCurrentY());
-        System.out.println("View updateStartGame()  this.drawStar.getCurrentX() " + this.drawStar.getCurrentX());
-        System.out.println("View updateStartGame()  this.drawStar.getCurrentY() " + this.drawStar.getCurrentY());
-        System.out.println("View updateStartGame()  this.drawStar.getWidth() " + this.drawStar.getWidth());
-        System.out.println("View updateStartGame()  this.drawStar.getHeight() " + this.drawStar.getHeight());
-        System.out.println("View updateStartGame()  this.drawCloud.getCurrentX() " + this.drawCloud.getCurrentX());
-        System.out.println("View updateStartGame()  this.drawCloud.getCurrentY() " + this.drawCloud.getCurrentY());
-        System.out.println("View updateStartGame()  this.drawCloud.getWidth() " + this.drawCloud.getWidth());
-        System.out.println("View updateStartGame()  this.drawCloud.getHeight() " + this.drawCloud.getHeight());
-        System.out.println("View updateStartGame()  this.drawGlitter.getCurrentX() " + this.drawGlitter.getCurrentX());
-        System.out.println("View updateStartGame()  this.drawGlitter.getCurrentY() " + this.drawGlitter.getCurrentY());
-        System.out.println("View updateStartGame()  this.drawGlitter.getWidth() " + this.drawGlitter.getWidth());
-        System.out.println("View updateStartGame()  this.drawGlitter.getHeight() " + this.drawGlitter.getHeight());
-
-
         this.frameWhale.getPanelRoot().add(this.frameWhale.getButtonStartGame());
         this.frameWhale.getButtonStartGame().setLocation(Layout.instance().BUTTON_START_GAME_X_POS, Layout.instance().BUTTON_START_GAME_Y_POS);
 
-
-        System.out.println("View updateStartGame()  this.frameWhale.getButtonStartGame().getLocation().x " + this.frameWhale.getButtonStartGame().getLocation().x);
-        System.out.println("View updateStartGame()  this.frameWhale.getButtonStartGame().getLocation().y " + this.frameWhale.getButtonStartGame().getLocation().y);
-        System.out.println("View updateStartGame()  this.frameWhale.getWidth() " + this.frameWhale.getWidth());
-        System.out.println("View updateStartGame()  this.frameWhale.getHeight() " + this.frameWhale.getHeight());
         this.updateRootPanel();
         this.frameWhale.invalidate();
         this.frameWhale.setVisible(true);
     }
 
+    /**
+     * The general capture all update method. Updating from here is determined by game mode.
+     */
     public void update() {
-        System.out.println("View update() ");
-        new Exception().printStackTrace();
         if (Controller.instance().getModelGameMode().equals("start")) {
             this.updateStartGame();
         }
@@ -115,6 +100,9 @@ public class View {
         }
     }
 
+    /**
+     * Update the View during continue game mode.
+     */
     public void updateContinueGame() {
         this.updateRootPanel();
         this.frameWhale.invalidate(); // calls paint
@@ -140,10 +128,10 @@ public class View {
         this.frameWhale.getLabelScore().setText(String.valueOf(score));
 
     }
-
+    /**
+     * Update the View during play game mode.
+     */
     public void updatePlayGame() {
-        System.out.println("View updatePlayGame()   ");
-        //new Exception().printStackTrace();
         this.frameWhale.getPanelRoot().remove(this.frameWhale.getButtonStartGame());
         this.drawWhale.setCurrentX(Controller.instance().getModelWhaleCurrentXPos());
         this.drawWhale.setCurrentY(Controller.instance().getModelWhaleCurrentYPos());
@@ -153,11 +141,6 @@ public class View {
         this.drawCloud.setCurrentY(Controller.instance().getModelCloudCurrentYPos());
         this.drawGlitter.setCurrentX(Controller.instance().getModelGlitterCurrentXPos());
         this.drawGlitter.setCurrentY(Controller.instance().getModelGlitterCurrentYPos());
-
-        System.out.println("View updatePlayGame()  this.drawWhale.getCurrentX() " + this.drawWhale.getCurrentX());
-        System.out.println("View updatePlayGame()  this.drawWhale.getCurrentY() " + this.drawWhale.getCurrentY());
-        System.out.println("View updatePlayGame()  this.drawWhale.getWidth() " + this.drawWhale.getWidth());
-        System.out.println("View updatePlayGame()  this.drawWhale.getHeight() " + this.drawWhale.getHeight());
 
         int health = Controller.instance().getModelHealth();
         String healthStr = "";
@@ -178,11 +161,6 @@ public class View {
         int score = Controller.instance().getModelScore();
         this.frameWhale.getLabelScore().setText(String.valueOf(score));
 
-        System.out.println("View updatePlayGame()  health " + health);
-        System.out.println("View updatePlayGame()  score " + score);
-
-
-        //this.updateViewCharactersAll();
         this.updateRootPanel();
         this.frameWhale.invalidate(); // calls paint
         this.frameWhale.setVisible(true);
@@ -192,109 +170,107 @@ public class View {
         View.instance().glitterFloatLeft();
     }
 
-    public void updateViewCharactersAll() {
-        System.out.println("View updateViewCharactersAll()   ");
-
-        this.drawWhale.repaint();
-    }
-
+    /**
+     * Entry point for program.
+     * @param args
+     */
     public static void main(String[] args) {
         View.instance().go();
-
     }
 
+    /**
+     * Driver for program.
+     */
     public void go() {
         Layout.instance().init(); // 1
         Controller.instance().modelInit(); // 2
-
         this.init(); // 3
     }
-    
 
-    
+
+    /**
+     * Triggers a cloud float left event on the screen.
+     */
     public void cloudFloatLeft() {
     	this.drawCloud.floatLeft();
     }
-    
+    /**
+     * Triggers a star float left event on the screen.
+     */
     public void starFloatLeft() {
-    	System.out.println("View    starFloatLeft()     (((((((((((((((((((((((  55555555555  ");
     	this.drawStar.floatLeft();
     }
-
+    /**
+     * Triggers a glitter float left event on the screen.
+     */
     public void glitterFloatLeft() {
         this.drawGlitter.floatLeft();
     }
-    
+    /**
+     * Triggers a whale step right event on the screen.
+     */
     public void whaleStepRight() {
     	this.drawWhale.stepRight();
         this.frameWhale.updateRootPanel();
 
     }
-
+    /**
+     * Triggers a whale step left event on the screen.
+     */
     public void whaleStepLeft() {
         this.drawWhale.stepLeft();
         this.frameWhale.updateRootPanel();
 
     }
-
+    /**
+     * Triggers a whale step up event on the screen.
+     */
     public void whaleStepUp() {
         this.drawWhale.stepUp();
         this.frameWhale.updateRootPanel();
 
     }
-
+    /**
+     * Triggers a whale step down event on the screen.
+     */
     public void whaleStepDown() {
         this.drawWhale.stepDown();
         this.frameWhale.updateRootPanel();
 
     }
 
-    public BufferedImage getDrawWhaleImage() {
-        return this.drawWhale.getImage();
-    }
-
-    public WhaleFrame getFrameWhale() {
-        return frameWhale;
-    }
-
-    public void setFrameWhale(WhaleFrame frameWhale) {
-        this.frameWhale = frameWhale;
-    }
-
+    /**
+     * Retrieve the whale character.
+     * @return Whale character.
+     */
     public ViewWhale getDrawWhale() {
         return drawWhale;
     }
 
-    public void setDrawWhale(ViewWhale drawWhale) {
-        this.drawWhale = drawWhale;
-    }
-
+    /**
+     * Retrieve the cloud character.
+     * @return cloud character.
+     */
     public ViewCloud getDrawCloud() {
         return drawCloud;
     }
-
+    /**
+     * Retrieve the glitter character.
+     * @return glitter character.
+     */
     public ViewGlitter getDrawGlitter() {
         return drawGlitter;
     }
-
-    public void setDrawGlitter(ViewGlitter drawGlitter) {
-        this.drawGlitter = drawGlitter;
-    }
-
+    /**
+     * Retrieve the star character.
+     * @return star character.
+     */
     public ViewStar getDrawStar() {
-    	System.out.println("View  getDrawStar()    99 22 23  .... 111  this.drawStar   " + this.drawStar.toString());
 		return drawStar;
 	}
 
 
-	public void setDrawStar(ViewStar drawStar) {
-		this.drawStar = drawStar;
-	}
 
-
-	public void setDrawCloud(ViewCloud drawCloud) {
-        this.drawCloud = drawCloud;
-    }
 
 
 }

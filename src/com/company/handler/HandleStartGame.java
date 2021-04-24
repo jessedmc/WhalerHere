@@ -8,20 +8,29 @@ import com.company.view.View;
  * Handles the starting of the game.
  */
 public class HandleStartGame {
+    /**
+     * Singleton instance
+     */
     private static HandleStartGame instance = null;
-
+    /**
+     * Singleton constructor
+     */
     private HandleStartGame() {
 
     }
-
+    /**
+     * Singleton instance call.
+     * @return singleton instance.
+     */
     public static HandleStartGame instance() {
         if (instance == null)
             instance = new HandleStartGame();
         return instance;
     }
-
+    /**
+     * Handler starting the game.
+     */
     public void handle() {
-        System.out.println("HandleStartGame handle()  ");
         Model.instance().setGameModeToPlay();
         View.instance().update();
         SoundPlay.instance().playGameSong();

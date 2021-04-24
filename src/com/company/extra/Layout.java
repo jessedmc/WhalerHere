@@ -3,10 +3,22 @@ package com.company.extra;
 import com.company.model.Model;
 import com.company.model.ModelCharacter;
 
+/**
+ * This class contains all the data for positions and dimensions of characters.
+ */
 public class Layout {
+    /**
+     * Singleton instance
+     */
     private static Layout instance = null;
 
+    /**
+     * Window width.
+     */
     public final int FRAME_WIDTH = 1200;
+    /**
+     * Window height.
+     */
     public final int FRAME_HEIGHT = 1000;
 
     public int WHALE_START_WINDOW_X_POS = -1;
@@ -51,12 +63,17 @@ public class Layout {
     public int glitterIncX = 0;
     public int glitterIncY = 0;
 
-
+    /**
+     * Singleton constructor
+     */
     private Layout() {
 
     }
 
-
+    /**
+     * Singleton instance call.
+     * @return singleton instance.
+     */
     public static Layout instance() {
         if (instance == null)
             instance = new Layout();
